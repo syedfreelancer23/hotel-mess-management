@@ -20,9 +20,7 @@ const defaultValues = {
   alternate_phone: '',
   email: '',
   gender: '',
-  nationality: '',
-  emirates_id_or_passport: '',
-  meal_type: 'Breakfast' as const,
+  meal_type: 'Lunch' as const,
   mess_plan_type: 'Daily' as const,
   number_of_persons: 1,
   special_notes: '',
@@ -42,9 +40,6 @@ export default function EntryForm({ mode, entryId, initialData }: EntryFormProps
     alternate_phone: initialData?.alternate_phone ?? defaultValues.alternate_phone,
     email: initialData?.email ?? defaultValues.email,
     gender: initialData?.gender ?? defaultValues.gender,
-    nationality: initialData?.nationality ?? defaultValues.nationality,
-    emirates_id_or_passport:
-      initialData?.emirates_id_or_passport ?? defaultValues.emirates_id_or_passport,
     meal_type: initialData?.meal_type ?? defaultValues.meal_type,
     mess_plan_type: initialData?.mess_plan_type ?? defaultValues.mess_plan_type,
     number_of_persons: initialData?.number_of_persons ?? defaultValues.number_of_persons,
@@ -190,22 +185,7 @@ export default function EntryForm({ mode, entryId, initialData }: EntryFormProps
               <option value="Other">Other</option>
             </select>
           </div>
-          <FormField
-            label="Nationality"
-            name="nationality"
-            value={formValues.nationality ?? ''}
-            onChange={handleChange}
-            error={fieldErrors.nationality}
-            placeholder="e.g. Indian, Pakistani, Filipino"
-          />
-          <FormField
-            label="Emirates ID / Passport No."
-            name="emirates_id_or_passport"
-            value={formValues.emirates_id_or_passport ?? ''}
-            onChange={handleChange}
-            error={fieldErrors.emirates_id_or_passport}
-            placeholder="Optional"
-          />
+
         </div>
       </div>
 
@@ -230,10 +210,9 @@ export default function EntryForm({ mode, entryId, initialData }: EntryFormProps
                   : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20'
               }`}
             >
-              <option value="Breakfast">Breakfast</option>
               <option value="Lunch">Lunch</option>
               <option value="Dinner">Dinner</option>
-              <option value="Full Board">Full Board</option>
+              <option value="Lunch & Dinner">Lunch &amp; Dinner</option>
             </select>
             {fieldErrors.meal_type && (
               <p className="mt-1 text-xs text-red-500">{fieldErrors.meal_type}</p>

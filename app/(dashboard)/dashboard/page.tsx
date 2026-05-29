@@ -1,5 +1,4 @@
 import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import StatsCard from '@/components/dashboard/StatsCard'
 
@@ -32,12 +31,6 @@ async function getDashboardStats() {
 
 export default async function DashboardPage() {
   const supabase = await createClient()
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (!user) redirect('/login')
 
   const [stats, { data: recentEntries }] = await Promise.all([
     getDashboardStats(),

@@ -26,8 +26,6 @@ export default async function EntryDetailPage({
     { label: 'Alternate Phone', value: entry.alternate_phone },
     { label: 'Email', value: entry.email },
     { label: 'Gender', value: entry.gender },
-    { label: 'Nationality', value: entry.nationality },
-    { label: 'Emirates ID / Passport', value: entry.emirates_id_or_passport },
     { label: 'Meal Type', value: entry.meal_type },
     { label: 'Mess Plan Type', value: entry.mess_plan_type },
     { label: 'Number of Persons', value: entry.number_of_persons.toString() },

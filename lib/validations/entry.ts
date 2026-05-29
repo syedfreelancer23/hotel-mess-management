@@ -25,19 +25,7 @@ export const entrySchema = z.object({
 
   gender: z.enum(['Male', 'Female', 'Other', '']).optional(),
 
-  nationality: z
-    .string()
-    .max(50, 'Nationality must be 50 characters or less')
-    .optional()
-    .or(z.literal('')),
-
-  emirates_id_or_passport: z
-    .string()
-    .max(50, 'ID/Passport must be 50 characters or less')
-    .optional()
-    .or(z.literal('')),
-
-  meal_type: z.enum(['Breakfast', 'Lunch', 'Dinner', 'Full Board'], {
+  meal_type: z.enum(['Lunch', 'Dinner', 'Lunch & Dinner'], {
     required_error: 'Meal type is required',
     invalid_type_error: 'Please select a valid meal type',
   }),

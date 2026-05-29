@@ -1,14 +1,23 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import EntryForm from '@/components/entries/EntryForm'
 import type { HotelMessEntry } from '@/types'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 export default async function EditEntryPage({
   params,
 }: {
   params: { id: string }
 }) {
+  const session = await getServerSession(authOptions)
+
+  if (session?.user?.role === 2) {
+    redirect('/entries/new')
+  }
+
   const supabase = await createClient()
 
   const { data: entry, error } = await supabase

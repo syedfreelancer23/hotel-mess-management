@@ -35,25 +35,30 @@ INSERT INTO users (username, password_hash, role_id) VALUES
 ON CONFLICT (username) DO NOTHING;
 
 -- 3. Drop and recreate the main entries table
---    (created_by now references public.users instead of auth.users)
+--    (created_by references public.users.user_id, matching NextAuth session IDs)
 DROP TABLE IF EXISTS hotel_mess_entries CASCADE;
 
-CREATE TABLE hotel_mess_entries (
-  id                uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
-  full_name         text        NOT NULL,
-  phone_number      text        NOT NULL,
-  whatsup_available boolean     DEFAULT false,
-  alternate_phone   text,
-  email             text,
-  gender            text        CHECK (gender IN ('Male', 'Female', 'Other')),
-  meal_type         text        NOT NULL CHECK (meal_type IN ('Lunch', 'Dinner', 'Lunch & Dinner')),
-  mess_plan_type    text        NOT NULL CHECK (mess_plan_type IN ('Daily', 'Weekly', 'Monthly')),
-  number_of_persons integer     NOT NULL DEFAULT 1 CHECK (number_of_persons >= 1),
-  special_notes     text,
-  status            text        NOT NULL DEFAULT 'Active' CHECK (status IN ('Active', 'Inactive')),
-  created_by        integer     NOT NULL REFERENCES public.users(user_id) ON DELETE CASCADE,
-  created_at        timestamptz NOT NULL DEFAULT now(),
-  updated_at        timestamptz NOT NULL DEFAULT now()
+CREATE TABLE IF NOT EXISTS hotel_mess_entries (
+  id                      uuid         PRIMARY KEY DEFAULT gen_random_uuid(),
+  full_name               text         UNIQUE NOT NULL,
+  phone_number            text         UNIQUE NOT NULL,
+  WhatsUp_Available       boolean      DEFAULT false, 
+  alternate_phone         text,
+  email                   text,
+  street_address          text        NOT NULL,
+  building_name           text        NOT NULL, 
+  flat_no                 text,
+  LandMark                text,
+  gender                  text         CHECK (gender IN ('Male', 'Female', 'Other')),
+  meal_type               text         NOT NULL CHECK (meal_type IN ('Lunch', 'Dinner', 'Lunch & Dinner')),
+  mess_plan_type          text         NOT NULL CHECK (mess_plan_type IN ('Daily', 'Weekly', 'Monthly')),
+  number_of_persons       integer      NOT NULL DEFAULT 1 CHECK (number_of_persons >= 1),
+  special_notes           text,
+  meal_starting_date      date,          
+  status                  text         NOT NULL DEFAULT 'Active' CHECK (status IN ('Active', 'Inactive')),
+  created_by              integer      NOT NULL REFERENCES public.users(user_id) ON DELETE CASCADE,
+  created_at              timestamptz  NOT NULL DEFAULT now(),
+  updated_at              timestamptz  NOT NULL DEFAULT now()
 );
 
 -- 4. Indexes

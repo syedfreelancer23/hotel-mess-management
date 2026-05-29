@@ -4,9 +4,10 @@ import { signOut } from 'next-auth/react'
 
 interface HeaderProps {
   userName: string
+  userRole?: number
 }
 
-export default function Header({ userName }: HeaderProps) {
+export default function Header({ userName, userRole }: HeaderProps) {
   return (
     <header className="sticky top-0 z-20 bg-white border-b border-gray-200 shadow-sm">
       <div className="flex items-center justify-between h-16 px-4 md:px-6">
@@ -35,6 +36,28 @@ export default function Header({ userName }: HeaderProps) {
 
         {/* Right side */}
         <div className="flex items-center gap-3">
+          {userRole === 1 && (
+            <a
+              href="/api/entries/export"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 hover:bg-emerald-100 transition-colors"
+            >
+              <svg
+                className="w-3.5 h-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 16v-8m0 8l-3-3m3 3l3-3M5 20h14"
+                />
+              </svg>
+              Download Excel
+            </a>
+          )}
+
           {/* User info */}
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold text-sm">

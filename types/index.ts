@@ -5,16 +5,21 @@ export type StatusType = 'Active' | 'Inactive'
 
 export interface HotelMessEntry {
   id: string
+  whatsup_available: boolean
   full_name: string
   phone_number: string
-  whatsup_available: boolean
   alternate_phone: string | null
   email: string | null
+  street_address: string
+  building_name: string
+  flat_no: string | null
+  landmark: string | null
   gender: GenderType | null
   meal_type: MealType
   mess_plan_type: MessPlanType
   number_of_persons: number
   special_notes: string | null
+  meal_starting_date: string | null
   status: StatusType
   created_by: number
   created_at: string

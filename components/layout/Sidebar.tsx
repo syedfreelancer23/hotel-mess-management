@@ -42,8 +42,16 @@ const navItems = [
   },
 ]
 
-export default function Sidebar() {
+interface SidebarProps {
+  userRole?: number
+}
+
+export default function Sidebar({ userRole }: SidebarProps) {
   const pathname = usePathname()
+  const visibleNavItems =
+    userRole === 2
+      ? navItems.filter((item) => item.href === '/entries/new')
+      : navItems
 
   return (
     <aside className="fixed inset-y-0 left-0 z-30 w-64 bg-white border-r border-gray-200 shadow-sm hidden lg:flex flex-col">
@@ -77,7 +85,7 @@ export default function Sidebar() {
         <p className="px-3 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
           Menu
         </p>
-        {navItems.map((item) => {
+        {visibleNavItems.map((item) => {
           const isActive =
             item.href === '/entries'
               ? pathname === '/entries'

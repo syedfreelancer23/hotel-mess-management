@@ -1,6 +1,15 @@
 import { z } from 'zod'
 
 export const entrySchema = z.object({
+  whatsup_available: z.preprocess(
+    (value) =>
+      value === true ||
+      value === 'true' ||
+      value === 'on' ||
+      value === '1',
+    z.boolean()
+  ),
+
   full_name: z
     .string()
     .min(1, 'Full name is required')
@@ -9,17 +18,39 @@ export const entrySchema = z.object({
   phone_number: z
     .string()
     .min(1, 'Phone number is required')
-    .max(20, 'Phone number must be 20 characters or less'),
+    .max(30, 'Phone number must be 30 characters or less'),
 
   alternate_phone: z
     .string()
-    .max(20, 'Alternate phone must be 20 characters or less')
+    .max(30, 'Alternate phone must be 30 characters or less')
     .optional()
     .or(z.literal('')),
 
   email: z
     .string()
     .email('Please enter a valid email address')
+    .optional()
+    .or(z.literal('')),
+
+  street_address: z
+    .string()
+    .min(1, 'Street address is required')
+    .max(250, 'Street address must be 250 characters or less'),
+
+  building_name: z
+    .string()
+    .min(1, 'Building name is required')
+    .max(150, 'Building name must be 150 characters or less'),
+
+  flat_no: z
+    .string()
+    .max(50, 'Flat number must be 50 characters or less')
+    .optional()
+    .or(z.literal('')),
+
+  landmark: z
+    .string()
+    .max(150, 'Landmark must be 150 characters or less')
     .optional()
     .or(z.literal('')),
 
@@ -47,6 +78,12 @@ export const entrySchema = z.object({
   special_notes: z
     .string()
     .max(500, 'Notes must be 500 characters or less')
+    .optional()
+    .or(z.literal('')),
+
+  meal_starting_date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Please provide a valid start date')
     .optional()
     .or(z.literal('')),
 

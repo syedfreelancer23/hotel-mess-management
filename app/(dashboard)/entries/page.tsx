@@ -1,7 +1,10 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
 import SearchFilterBar from '@/components/entries/SearchFilterBar'
 import EntryTable from '@/components/entries/EntryTable'
+import { authOptions } from '@/lib/auth'
 
 const PAGE_SIZE = 10
 
@@ -17,6 +20,12 @@ export default async function EntriesPage({
 }: {
   searchParams: SearchParams
 }) {
+  const session = await getServerSession(authOptions)
+
+  if (session?.user?.role === 2) {
+    redirect('/entries/new')
+  }
+
   const supabase = await createClient()
 
   const page = Math.max(1, parseInt(searchParams.page ?? '1'))

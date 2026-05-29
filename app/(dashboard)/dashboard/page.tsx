@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import StatsCard from '@/components/dashboard/StatsCard'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 async function getDashboardStats() {
   const supabase = await createClient()
@@ -30,6 +32,43 @@ async function getDashboardStats() {
 }
 
 export default async function DashboardPage() {
+  const session = await getServerSession(authOptions)
+  const canCreate = session?.user?.role === 2
+
+  if (canCreate) {
+    return (
+      <div className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+            <p className="text-gray-500 text-sm mt-1">
+              You can create a new guest mess entry from here.
+            </p>
+          </div>
+          <Link
+            href="/entries/new"
+            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors shadow-sm"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            New Entry
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   const supabase = await createClient()
 
   const [stats, { data: recentEntries }] = await Promise.all([
@@ -51,25 +90,27 @@ export default async function DashboardPage() {
             Welcome back! Here&apos;s an overview of your mess management.
           </p>
         </div>
-        <Link
-          href="/entries/new"
-          className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors shadow-sm"
-        >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        {canCreate && (
+          <Link
+            href="/entries/new"
+            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors shadow-sm"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-          New Entry
-        </Link>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            New Entry
+          </Link>
+        )}
       </div>
 
       {/* Stats Grid */}
@@ -125,12 +166,14 @@ export default async function DashboardPage() {
               />
             </svg>
             <p className="text-gray-400 text-sm">No entries yet.</p>
-            <Link
-              href="/entries/new"
-              className="mt-2 inline-block text-sm text-blue-600 hover:underline"
-            >
-              Create your first entry
-            </Link>
+            {canCreate && (
+              <Link
+                href="/entries/new"
+                className="mt-2 inline-block text-sm text-blue-600 hover:underline"
+              >
+                Create your first entry
+              </Link>
+            )}
           </div>
         ) : (
           <div className="divide-y divide-gray-50">

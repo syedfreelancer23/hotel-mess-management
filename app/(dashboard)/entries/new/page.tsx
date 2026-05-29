@@ -1,7 +1,12 @@
 import Link from 'next/link'
 import EntryForm from '@/components/entries/EntryForm'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
-export default function NewEntryPage() {
+export default async function NewEntryPage() {
+  const session = await getServerSession(authOptions)
+  const canCreate = session?.user?.role === 2
+
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Page Header */}
@@ -32,7 +37,7 @@ export default function NewEntryPage() {
         </div>
       </div>
 
-      <EntryForm mode="create" />
+      <EntryForm mode="create" canCreate={canCreate} />
     </div>
   )
 }

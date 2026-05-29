@@ -1,13 +1,22 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import ToggleStatusButton from '@/components/entries/ToggleStatusButton'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
 
 export default async function EntryDetailPage({
   params,
 }: {
   params: { id: string }
 }) {
+  const session = await getServerSession(authOptions)
+
+  if (session?.user?.role === 2) {
+    redirect('/entries/new')
+  }
+
   const supabase = await createClient()
 
   const { data: entry, error } = await supabase
@@ -21,13 +30,22 @@ export default async function EntryDetailPage({
   }
 
   const fields = [
+    {
+      label: 'WhatsApp Available',
+      value: entry.whatsup_available ? 'Yes' : 'No',
+    },
     { label: 'Full Name', value: entry.full_name },
     { label: 'Phone Number', value: entry.phone_number },
     { label: 'Alternate Phone', value: entry.alternate_phone },
     { label: 'Email', value: entry.email },
+    { label: 'Street Address', value: entry.street_address },
+    { label: 'Building Name', value: entry.building_name },
+    { label: 'Flat No', value: entry.flat_no },
+    { label: 'Landmark', value: entry.landmark },
     { label: 'Gender', value: entry.gender },
     { label: 'Meal Type', value: entry.meal_type },
     { label: 'Mess Plan Type', value: entry.mess_plan_type },
+    { label: 'Meal Starting Date', value: entry.meal_starting_date },
     { label: 'Number of Persons', value: entry.number_of_persons.toString() },
     { label: 'Status', value: entry.status },
     {

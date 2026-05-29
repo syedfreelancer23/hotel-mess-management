@@ -16,12 +16,13 @@ export default async function DashboardLayout({
   }
 
   const displayName = session.user?.name || 'User'
+  const userRole = session.user?.role
 
   return (
     <div className="flex h-full min-h-screen bg-gray-50">
-      <Sidebar />
+      <Sidebar userRole={userRole} />
       <div className="flex flex-col flex-1 min-w-0 lg:ml-64">
-        <Header userName={displayName} />
+        <Header userName={displayName} userRole={userRole} />
         <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
           {children}
         </main>

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import AppQrCode from '@/components/common/AppQrCode'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -147,6 +148,10 @@ export default function LoginPage() {
           <p className="mt-6 text-center text-xs text-gray-400">
             Only authorized staff members can access this system.
           </p>
+
+          <div className="mt-6 flex justify-center">
+            <AppQrCode className="max-w-[240px]" />
+          </div>
         </div>
       </div>
     </div>

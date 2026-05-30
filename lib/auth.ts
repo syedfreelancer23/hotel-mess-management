@@ -4,6 +4,8 @@ import bcrypt from 'bcryptjs'
 import { createServiceClient } from '@/lib/supabase/service'
 
 export const authOptions: NextAuthOptions = {
+  // Explicit session timing keeps multi-device logins predictable in production.
+  // Each device has its own JWT cookie and remains signed in until maxAge expires.
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -63,6 +65,12 @@ export const authOptions: NextAuthOptions = {
 
   session: {
     strategy: 'jwt',
+    maxAge: 60 * 60 * 24 * 30,
+    updateAge: 60 * 60 * 24,
+  },
+
+  jwt: {
+    maxAge: 60 * 60 * 24 * 30,
   },
 
   secret: process.env.NEXTAUTH_SECRET,

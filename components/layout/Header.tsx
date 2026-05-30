@@ -1,6 +1,7 @@
 'use client'
 
 import { signOut } from 'next-auth/react'
+import { usePathname, useSearchParams } from 'next/navigation'
 
 interface HeaderProps {
   userName: string
@@ -8,14 +9,22 @@ interface HeaderProps {
 }
 
 export default function Header({ userName, userRole }: HeaderProps) {
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const statusFilter = searchParams.get('status')
+  const isStatusScoped = pathname.startsWith('/entries') && statusFilter
+  const exportHref = isStatusScoped
+    ? `/api/entries/export?status=${encodeURIComponent(statusFilter)}`
+    : '/api/entries/export'
+
   return (
-    <header className="sticky top-0 z-20 bg-white border-b border-gray-200 shadow-sm">
+    <header className="warm-app-header">
       <div className="flex items-center justify-between h-16 px-4 md:px-6">
         {/* Mobile brand */}
         <div className="flex items-center gap-3 lg:hidden">
-          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-[#bf6f43] text-[#fff8ef] flex items-center justify-center shadow-sm">
             <svg
-              className="w-4 h-4 text-white"
+              className="w-4 h-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -28,7 +37,7 @@ export default function Header({ userName, userRole }: HeaderProps) {
               />
             </svg>
           </div>
-          <span className="font-semibold text-gray-900 text-sm">Hotel Mess</span>
+          <span className="font-semibold text-[#3f342d] text-sm">Hotel Mess</span>
         </div>
 
         {/* Spacer on desktop */}
@@ -38,8 +47,8 @@ export default function Header({ userName, userRole }: HeaderProps) {
         <div className="flex items-center gap-3">
           {userRole === 1 && (
             <a
-              href="/api/entries/export"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 hover:bg-emerald-100 transition-colors"
+              href={exportHref}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[#d9c3a8] bg-[#fff2e2] px-3 py-1.5 text-xs font-medium text-[#7a5b48] hover:bg-[#ffe8cf] transition-colors"
             >
               <svg
                 className="w-3.5 h-3.5"
@@ -60,10 +69,10 @@ export default function Header({ userName, userRole }: HeaderProps) {
 
           {/* User info */}
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold text-sm">
+            <div className="w-8 h-8 rounded-full bg-[#f2dec8] flex items-center justify-center text-[#8d4f31] font-semibold text-sm">
               {userName.charAt(0).toUpperCase()}
             </div>
-            <p className="hidden md:block text-sm font-medium text-gray-900">
+            <p className="hidden md:block text-sm font-medium text-[#3f342d]">
               {userName}
             </p>
           </div>
@@ -72,7 +81,7 @@ export default function Header({ userName, userRole }: HeaderProps) {
           <button
             type="button"
             onClick={() => signOut({ callbackUrl: '/logout' })}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 hover:text-red-600 hover:border-red-200 transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-[#e7d8c4] bg-[#fff8ef] px-3 py-1.5 text-xs font-medium text-[#6f6056] hover:bg-[#fff1e0] hover:text-[#9c4f43] hover:border-[#dfb6ac] transition-colors"
           >
             <svg
               className="w-3.5 h-3.5"

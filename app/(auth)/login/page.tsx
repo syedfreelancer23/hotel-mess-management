@@ -4,13 +4,16 @@ import { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import AppQrCode from '@/components/common/AppQrCode'
 
-const authDebugEnabled = process.env.NEXT_PUBLIC_AUTH_DEBUG === 'true'
+// Debug logs intentionally disabled.
+// Set to true temporarily only when actively troubleshooting sign-in behavior.
+const authDebugEnabled = false
 
 export default function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [isGuestPanelOpen, setIsGuestPanelOpen] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -45,13 +48,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-slate-100 px-4">
-      <div className="w-full max-w-md">
+    <div className="warm-page">
+      <div className="warm-shell">
         {/* Brand */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-600 shadow-lg mb-4">
+        <div className="warm-brand">
+          <div className="warm-brand-icon">
             <svg
-              className="w-8 h-8 text-white"
+              className="w-8 h-8"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -64,28 +67,88 @@ export default function LoginPage() {
               />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">
-            Hotel Mess Management
+          <h1 className="warm-heading">
+            ZEE Kitchens & Bakers
           </h1>
-          <p className="text-gray-500 mt-2 text-sm">
+          <p className="warm-subtext">
             Sign in to manage guest entries and meal plans
           </p>
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+        <div className="warm-card">
           {error && (
-            <div className="mb-6 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+            <div className="warm-alert mb-6">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="warm-panel mb-6">
+            <button
+              type="button"
+              onClick={() => setIsGuestPanelOpen((prev) => !prev)}
+              className="warm-panel-toggle"
+              aria-expanded={isGuestPanelOpen}
+              aria-controls="guest-credentials-panel"
+            >
+              <span className="warm-panel-title">Guest login credentials</span>
+              <svg
+                className={`h-4 w-4 transition-transform duration-300 ${isGuestPanelOpen ? 'rotate-180' : ''}`}
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+
+            <div
+              id="guest-credentials-panel"
+              className={`warm-panel-body transition-all duration-300 ease-in-out ${isGuestPanelOpen ? 'max-h-52 pb-3 opacity-100' : 'max-h-0 pb-0 opacity-0'}`}
+            >
+              <p>
+                Username: <span className="font-mono">guest</span>
+              </p>
+              <p>
+                Password: <span className="font-mono">guest@123</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="warm-actions mb-6">
+            <button
+              type="button"
+              onClick={() => {
+                setUsername('guest')
+                setPassword('guest@123')
+                setError('')
+              }}
+              disabled={loading}
+              className="warm-btn warm-btn-secondary"
+            >
+              Fill Guest Credentials
+            </button>
+
+            <a
+              href="https://maps.app.goo.gl/DiVEugHu5m2d4go1A?g_st=awb"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="warm-btn warm-btn-primary"
+            >
+              Get Directions
+            </a>
+          </div>
+
+          <form onSubmit={handleSubmit} className="warm-form">
             {/* Username */}
-            <div>
+            <div className="warm-field">
               <label
                 htmlFor="username"
-                className="block text-sm font-medium text-gray-700 mb-1.5"
+                className="warm-label"
               >
                 Username
               </label>
@@ -96,16 +159,16 @@ export default function LoginPage() {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter your username"
-                className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition"
+                placeholder="guest"
+                className="warm-control"
               />
             </div>
 
             {/* Password */}
-            <div>
+            <div className="warm-field">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 mb-1.5"
+                className="warm-label"
               >
                 Password
               </label>
@@ -116,15 +179,15 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition"
+                placeholder="guest@123"
+                className="warm-control"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-blue-600 text-white font-medium text-sm hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+              className="warm-btn warm-btn-primary warm-submit"
             >
               {loading ? (
                 <>
@@ -155,11 +218,11 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="mt-6 text-center text-xs text-gray-400">
+          <p className="warm-note">
             Only authorized staff members can access this system.
           </p>
 
-          <div className="mt-6 flex justify-center">
+          <div className="warm-qr">
             <AppQrCode className="max-w-[240px]" />
           </div>
         </div>

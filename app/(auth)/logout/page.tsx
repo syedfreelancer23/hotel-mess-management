@@ -2,12 +2,12 @@ import Link from 'next/link'
 
 export default function LogoutPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-slate-100 px-4">
-      <div className="w-full max-w-md text-center">
+    <div className="warm-page px-4">
+      <div className="warm-shell text-center">
         {/* Icon */}
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-green-100 shadow-sm mb-6">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#f6e2d0] text-[#a85f38] shadow-sm mb-6">
           <svg
-            className="w-8 h-8 text-green-600"
+            className="w-8 h-8"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -21,17 +21,17 @@ export default function LogoutPage() {
           </svg>
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+        <h1 className="warm-heading mb-2">
           You have been signed out
         </h1>
-        <p className="text-gray-500 text-sm mb-8">
+        <p className="warm-subtext mb-8">
           Thank you for using Hotel Mess Management. Your session has ended
           securely.
         </p>
 
         <Link
           href="/login"
-          className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-sm font-medium text-white hover:bg-blue-700 transition-colors shadow-sm"
+          className="warm-btn warm-btn-primary w-full sm:w-auto"
         >
           <svg
             className="w-4 h-4"

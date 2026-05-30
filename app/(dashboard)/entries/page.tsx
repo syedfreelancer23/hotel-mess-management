@@ -58,18 +58,18 @@ export default async function EntriesPage({
   const totalPages = count ? Math.ceil(count / PAGE_SIZE) : 0
 
   return (
-    <div className="space-y-6">
+    <div className="warm-page-block">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="warm-page-header sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">All Entries</h1>
-          <p className="text-gray-500 text-sm mt-1">
+          <h1 className="warm-page-title">All Entries</h1>
+          <p className="warm-page-subtitle">
             {count !== null ? `${count} total record${count !== 1 ? 's' : ''}` : 'Loading...'}
           </p>
         </div>
         <Link
           href="/entries/new"
-          className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors shadow-sm"
+          className="warm-btn warm-btn-primary w-full sm:w-auto"
         >
           <svg
             className="w-4 h-4"
@@ -97,7 +97,7 @@ export default async function EntriesPage({
 
       {/* Error State */}
       {error && (
-        <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+        <div className="warm-alert">
           Failed to load entries: {error.message}
         </div>
       )}
@@ -108,7 +108,7 @@ export default async function EntriesPage({
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between py-2">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-[#7d6e63]">
             Page {page} of {totalPages}
           </p>
           <div className="flex gap-2">
@@ -121,7 +121,7 @@ export default async function EntriesPage({
                     page: page - 1,
                   },
                 }}
-                className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                className="warm-outline-btn"
               >
                 ← Previous
               </Link>
@@ -135,7 +135,7 @@ export default async function EntriesPage({
                     page: page + 1,
                   },
                 }}
-                className="inline-flex items-center gap-1 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                className="warm-outline-btn"
               >
                 Next →
               </Link>

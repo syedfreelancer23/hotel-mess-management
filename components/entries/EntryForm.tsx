@@ -28,11 +28,16 @@ const defaultValues = {
   landmark: '',
   gender: '',
   meal_type: 'Lunch' as const,
-  mess_plan_type: 'Daily' as const,
+  mess_plan_type: 'Monthly' as const,
   number_of_persons: 1,
   special_notes: '',
   meal_starting_date: '',
   status: 'Active' as const,
+}
+
+function normalizeMessPlanType(value?: string | null) {
+  // Keep frontend value aligned with DB/UI constraint to prevent insert failures.
+  return value === 'Monthly' ? 'Monthly' : 'Monthly'
 }
 
 export default function EntryForm({
@@ -65,7 +70,9 @@ export default function EntryForm({
     landmark: initialData?.landmark ?? defaultValues.landmark,
     gender: initialData?.gender ?? defaultValues.gender,
     meal_type: initialData?.meal_type ?? defaultValues.meal_type,
-    mess_plan_type: initialData?.mess_plan_type ?? defaultValues.mess_plan_type,
+    mess_plan_type: normalizeMessPlanType(
+      initialData?.mess_plan_type ?? defaultValues.mess_plan_type
+    ),
     number_of_persons: initialData?.number_of_persons ?? defaultValues.number_of_persons,
     special_notes: initialData?.special_notes ?? defaultValues.special_notes,
     meal_starting_date:
@@ -296,7 +303,7 @@ export default function EntryForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+    <form onSubmit={handleSubmit} className="space-y-6 warm-entry-form" noValidate>
       {toastMessage && (
         <div
           className={`fixed right-4 top-4 z-50 max-w-sm rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800 shadow-lg transition-opacity duration-700 ${
@@ -530,7 +537,6 @@ export default function EntryForm({
                   : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20'
               }`}
             >
-              <option value="Weekly">Weekly</option>
               <option value="Monthly">Monthly</option>
             </select>
             {fieldErrors.mess_plan_type && (
@@ -624,7 +630,7 @@ export default function EntryForm({
         <button
           type="button"
           onClick={() => router.back()}
-          className="rounded-xl border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+          className="warm-outline-btn"
           disabled={isPending}
         >
           Cancel
@@ -632,7 +638,7 @@ export default function EntryForm({
         <button
           type="submit"
           disabled={isPending || success || (mode === 'create' && !canCreate)}
-          className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-sm"
+          className="warm-btn warm-btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {isPending && (
             <svg

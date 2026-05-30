@@ -3,7 +3,9 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
 import { createServiceClient } from '@/lib/supabase/service'
 
-const authDebugEnabled = process.env.AUTH_DEBUG === 'true'
+// Debug logs intentionally disabled.
+// Set to true temporarily only when actively troubleshooting auth in deployment logs.
+const authDebugEnabled = false
 
 function debugAuthLog(message: string, meta?: Record<string, unknown>) {
   if (!authDebugEnabled) return

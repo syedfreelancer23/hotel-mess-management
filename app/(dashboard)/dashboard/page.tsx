@@ -37,17 +37,17 @@ export default async function DashboardPage() {
 
   if (canCreate) {
     return (
-      <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="warm-page-block">
+        <div className="warm-page-header sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-500 text-sm mt-1">
+            <h1 className="warm-page-title">Dashboard</h1>
+            <p className="warm-page-subtitle">
               You can create a new guest mess entry from here.
             </p>
           </div>
           <Link
             href="/entries/new"
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors shadow-sm"
+            className="warm-btn warm-btn-primary w-full sm:w-auto"
           >
             <svg
               className="w-4 h-4"
@@ -81,19 +81,19 @@ export default async function DashboardPage() {
   ])
 
   return (
-    <div className="space-y-6">
+      <div className="warm-page-block">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="warm-page-header sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-500 text-sm mt-1">
+          <h1 className="warm-page-title">Dashboard</h1>
+          <p className="warm-page-subtitle">
             Welcome back! Here&apos;s an overview of your mess management.
           </p>
         </div>
         {canCreate && (
           <Link
             href="/entries/new"
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors shadow-sm"
+            className="warm-btn warm-btn-primary w-full sm:w-auto"
           >
             <svg
               className="w-4 h-4"
@@ -139,12 +139,12 @@ export default async function DashboardPage() {
       </div>
 
       {/* Recent Entries */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <h2 className="font-semibold text-gray-900">Recent Entries</h2>
+      <div className="warm-surface overflow-hidden">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#ead9c4]">
+          <h2 className="font-semibold text-[#3f342d]">Recent Entries</h2>
           <Link
             href="/entries"
-            className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+            className="warm-link text-sm"
           >
             View all →
           </Link>
@@ -153,7 +153,7 @@ export default async function DashboardPage() {
         {!recentEntries || recentEntries.length === 0 ? (
           <div className="px-6 py-14 text-center">
             <svg
-              className="mx-auto w-12 h-12 text-gray-300 mb-3"
+              className="mx-auto w-12 h-12 text-[#c7b7a8] mb-3"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -165,50 +165,50 @@ export default async function DashboardPage() {
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
               />
             </svg>
-            <p className="text-gray-400 text-sm">No entries yet.</p>
+            <p className="text-[#8c7a6f] text-sm">No entries yet.</p>
             {canCreate && (
               <Link
                 href="/entries/new"
-                className="mt-2 inline-block text-sm text-blue-600 hover:underline"
+                className="mt-2 inline-block text-sm warm-link"
               >
                 Create your first entry
               </Link>
             )}
           </div>
         ) : (
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-[#efe2d0]">
             {recentEntries.map((entry) => (
               <div
                 key={entry.id}
-                className="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors"
+                className="flex items-center justify-between px-6 py-4 hover:bg-[#fff6ea] transition-colors"
               >
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="flex-shrink-0 w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold text-sm">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-full bg-[#f4dfc8] flex items-center justify-center text-[#8d4f31] font-semibold text-sm">
                     {entry.full_name.charAt(0).toUpperCase()}
                   </div>
                   <div className="min-w-0">
-                    <p className="font-medium text-gray-900 text-sm truncate">
+                    <p className="font-medium text-[#3f342d] text-sm truncate">
                       {entry.full_name}
                     </p>
-                    <p className="text-gray-400 text-xs">{entry.phone_number}</p>
+                    <p className="text-[#8c7a6f] text-xs">{entry.phone_number}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
-                  <span className="hidden sm:inline text-xs text-gray-500 bg-gray-100 rounded-full px-2.5 py-0.5">
+                  <span className="hidden sm:inline warm-chip warm-chip-neutral">
                     {entry.meal_type}
                   </span>
                   <span
-                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                    className={`warm-chip ${
                       entry.status === 'Active'
-                        ? 'bg-green-50 text-green-700 ring-1 ring-green-600/20'
-                        : 'bg-gray-100 text-gray-500'
+                        ? 'warm-chip-active'
+                        : 'warm-chip-inactive'
                     }`}
                   >
                     {entry.status}
                   </span>
                   <Link
                     href={`/entries/${entry.id}`}
-                    className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+                    className="text-xs warm-link"
                   >
                     View
                   </Link>

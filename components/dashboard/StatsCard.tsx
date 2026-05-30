@@ -19,19 +19,16 @@ const iconPaths = {
 
 const colorStyles = {
   blue: {
-    bg: 'bg-blue-50',
-    icon: 'text-blue-600',
-    iconBg: 'bg-blue-100',
+    icon: 'text-[#8d4f31]',
+    iconBg: 'bg-[#f2dec8]',
   },
   green: {
-    bg: 'bg-green-50',
-    icon: 'text-green-600',
-    iconBg: 'bg-green-100',
+    icon: 'text-[#6d7f46]',
+    iconBg: 'bg-[#eaf0da]',
   },
   purple: {
-    bg: 'bg-purple-50',
-    icon: 'text-purple-600',
-    iconBg: 'bg-purple-100',
+    icon: 'text-[#7c614f]',
+    iconBg: 'bg-[#efe3d6]',
   },
 }
 
@@ -45,7 +42,7 @@ export default function StatsCard({
   const styles = colorStyles[color]
 
   const content = (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
+    <div className="warm-surface p-6 flex items-center gap-4 hover:shadow-md transition-shadow">
       <div
         className={`flex-shrink-0 w-12 h-12 rounded-xl ${styles.iconBg} flex items-center justify-center`}
       >
@@ -64,8 +61,8 @@ export default function StatsCard({
         </svg>
       </div>
       <div>
-        <p className="text-sm font-medium text-gray-500">{title}</p>
-        <p className="text-3xl font-bold text-gray-900 mt-0.5">{value}</p>
+        <p className="text-sm font-medium text-[#7c6d62]">{title}</p>
+        <p className="text-3xl font-bold text-[#3f342d] mt-0.5">{value}</p>
       </div>
     </div>
   )

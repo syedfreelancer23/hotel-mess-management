@@ -4,7 +4,7 @@ import * as XLSX from 'xlsx'
 import { authOptions } from '@/lib/auth'
 import { createClient } from '@/lib/supabase/server'
 
-export async function GET() {
+export async function GET(request: Request) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user) {
@@ -18,13 +18,23 @@ export async function GET() {
     )
   }
 
+  const { searchParams } = new URL(request.url)
+  const status = searchParams.get('status')
+  const validStatus = status === 'Active' || status === 'Inactive' ? status : null
+
   const supabase = await createClient()
-  const { data, error } = await supabase
+  let query = supabase
     .from('hotel_mess_entries')
     .select(
       'id, whatsup_available, full_name, phone_number, alternate_phone, email, street_address, building_name, flat_no, landmark, gender, meal_type, mess_plan_type, number_of_persons, meal_starting_date, status, special_notes, created_by, created_at, updated_at'
     )
     .order('created_at', { ascending: false })
+
+  if (validStatus) {
+    query = query.eq('status', validStatus)
+  }
+
+  const { data, error } = await query
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
@@ -62,7 +72,8 @@ export async function GET() {
     bookType: 'xlsx',
   })
 
-  const fileName = `hotel-mess-entries-${new Date().toISOString().slice(0, 10)}.xlsx`
+  const statusSuffix = validStatus ? `-${validStatus.toLowerCase()}` : ''
+  const fileName = `hotel-mess-entries${statusSuffix}-${new Date().toISOString().slice(0, 10)}.xlsx`
 
   return new Response(buffer, {
     status: 200,

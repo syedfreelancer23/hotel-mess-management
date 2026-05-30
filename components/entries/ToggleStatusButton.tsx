@@ -35,8 +35,8 @@ export default function ToggleStatusButton({
         disabled={isPending}
         className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 ${
           status === 'Active'
-            ? 'border-red-200 bg-red-50 text-red-600 hover:bg-red-100'
-            : 'border-green-200 bg-green-50 text-green-700 hover:bg-green-100'
+            ? 'border-[#dfb6ac] bg-[#fff0ec] text-[#a84f43] hover:bg-[#ffe5de]'
+            : 'border-[#cddfcf] bg-[#eef6ef] text-[#3f744a] hover:bg-[#e3f0e5]'
         }`}
       >
         {isPending ? (
@@ -86,7 +86,7 @@ export default function ToggleStatusButton({
         )}
         {status === 'Active' ? 'Mark Inactive' : 'Mark Active'}
       </button>
-      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
+      {error && <p className="mt-1 text-xs text-[#a84f43]">{error}</p>}
     </div>
   )
 }

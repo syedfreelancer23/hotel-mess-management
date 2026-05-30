@@ -12,10 +12,10 @@ interface EntryTableProps {
 export default function EntryTable({ entries }: EntryTableProps) {
   if (entries.length === 0) {
     return (
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+      <div className="warm-surface">
         <div className="flex flex-col items-center justify-center py-16 px-6 text-center">
           <svg
-            className="w-14 h-14 text-gray-200 mb-4"
+            className="w-14 h-14 text-[#c7b7a8] mb-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -27,12 +27,12 @@ export default function EntryTable({ entries }: EntryTableProps) {
               d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
             />
           </svg>
-          <p className="text-gray-500 font-medium">No entries found</p>
-          <p className="text-gray-400 text-sm mt-1">
+          <p className="text-[#6f6056] font-medium">No entries found</p>
+          <p className="text-[#8d7d71] text-sm mt-1">
             Try adjusting your search or filters, or{' '}
             <Link
               href="/entries/new"
-              className="text-blue-600 hover:underline"
+              className="warm-link"
             >
               create a new entry
             </Link>
@@ -46,34 +46,34 @@ export default function EntryTable({ entries }: EntryTableProps) {
   return (
     <>
       {/* Desktop Table */}
-      <div className="hidden md:block bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="hidden md:block warm-surface overflow-hidden">
+        <table className="w-full text-sm warm-data-table">
           <thead>
-            <tr className="border-b border-gray-100 bg-gray-50">
-              <th className="text-left px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <tr className="border-b border-[#ead9c4]">
+              <th className="text-left px-6 py-3.5 text-xs font-semibold text-[#7c6d62] uppercase tracking-wider">
                 Guest
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th className="text-left px-4 py-3.5 text-xs font-semibold text-[#7c6d62] uppercase tracking-wider">
                 Meal Type
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th className="text-left px-4 py-3.5 text-xs font-semibold text-[#7c6d62] uppercase tracking-wider">
                 Plan
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th className="text-left px-4 py-3.5 text-xs font-semibold text-[#7c6d62] uppercase tracking-wider">
                 Persons
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th className="text-left px-4 py-3.5 text-xs font-semibold text-[#7c6d62] uppercase tracking-wider">
                 Status
               </th>
-              <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th className="text-left px-4 py-3.5 text-xs font-semibold text-[#7c6d62] uppercase tracking-wider">
                 Created
               </th>
-              <th className="text-right px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              <th className="text-right px-6 py-3.5 text-xs font-semibold text-[#7c6d62] uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-[#efe2d0]">
             {entries.map((entry) => (
               <EntryRow key={entry.id} entry={entry} />
             ))}
@@ -106,64 +106,64 @@ function EntryRow({ entry }: { entry: HotelMessEntry }) {
   }
 
   return (
-    <tr className="hover:bg-gray-50 transition-colors">
+    <tr className="transition-colors">
       <td className="px-6 py-4">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold text-xs flex-shrink-0">
+          <div className="warm-avatar w-8 h-8 rounded-full flex items-center justify-center font-semibold text-xs flex-shrink-0">
             {entry.full_name.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <p className="font-medium text-gray-900 truncate max-w-[160px]">
+            <p className="font-medium text-[#3f342d] truncate max-w-[160px]">
               {entry.full_name}
             </p>
-            <p className="text-xs text-gray-400">{entry.phone_number}</p>
+            <p className="text-xs text-[#8c7a6f]">{entry.phone_number}</p>
           </div>
         </div>
       </td>
-      <td className="px-4 py-4 text-gray-600">{entry.meal_type}</td>
+      <td className="px-4 py-4 text-[#66574c]">{entry.meal_type}</td>
       <td className="px-4 py-4">
-        <span className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700">
+        <span className="warm-chip warm-chip-neutral">
           {entry.mess_plan_type}
         </span>
       </td>
-      <td className="px-4 py-4 text-gray-600">{entry.number_of_persons}</td>
+      <td className="px-4 py-4 text-[#66574c]">{entry.number_of_persons}</td>
       <td className="px-4 py-4">
         <span
-          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+          className={`warm-chip ${
             currentStatus === 'Active'
-              ? 'bg-green-50 text-green-700 ring-1 ring-green-600/20'
-              : 'bg-gray-100 text-gray-500 ring-1 ring-gray-400/20'
+              ? 'warm-chip-active'
+              : 'warm-chip-inactive'
           }`}
         >
           {currentStatus}
         </span>
       </td>
-      <td className="px-4 py-4 text-xs text-gray-400">
+      <td className="px-4 py-4 text-xs text-[#8c7a6f]">
         {new Date(entry.created_at).toLocaleDateString()}
       </td>
       <td className="px-6 py-4">
         <div className="flex items-center justify-end gap-2">
           <Link
             href={`/entries/${entry.id}`}
-            className="text-xs font-medium text-blue-600 hover:text-blue-700"
+            className="text-xs font-medium warm-link"
           >
             View
           </Link>
-          <span className="text-gray-200">|</span>
+          <span className="text-[#d8c8b7]">|</span>
           <Link
             href={`/entries/${entry.id}/edit`}
-            className="text-xs font-medium text-gray-500 hover:text-gray-700"
+            className="text-xs font-medium text-[#7f6f64] hover:text-[#5f5045]"
           >
             Edit
           </Link>
-          <span className="text-gray-200">|</span>
+          <span className="text-[#d8c8b7]">|</span>
           <button
             onClick={handleToggle}
             disabled={isPending}
             className={`text-xs font-medium disabled:opacity-50 ${
               currentStatus === 'Active'
-                ? 'text-red-500 hover:text-red-700'
-                : 'text-green-600 hover:text-green-700'
+                ? 'text-[#af594b] hover:text-[#954639]'
+                : 'text-[#4f7b58] hover:text-[#3f6448]'
             }`}
           >
             {currentStatus === 'Active' ? 'Deactivate' : 'Activate'}
@@ -189,22 +189,22 @@ function EntryCard({ entry }: { entry: HotelMessEntry }) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 space-y-3">
+    <div className="warm-surface p-4 space-y-3">
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold flex-shrink-0">
+          <div className="warm-avatar w-10 h-10 rounded-full flex items-center justify-center font-semibold flex-shrink-0">
             {entry.full_name.charAt(0).toUpperCase()}
           </div>
           <div className="min-w-0">
-            <p className="font-semibold text-gray-900 truncate">{entry.full_name}</p>
-            <p className="text-xs text-gray-400">{entry.phone_number}</p>
+            <p className="font-semibold text-[#3f342d] truncate">{entry.full_name}</p>
+            <p className="text-xs text-[#8c7a6f]">{entry.phone_number}</p>
           </div>
         </div>
         <span
-          className={`flex-shrink-0 inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+          className={`flex-shrink-0 warm-chip ${
             currentStatus === 'Active'
-              ? 'bg-green-50 text-green-700'
-              : 'bg-gray-100 text-gray-500'
+              ? 'warm-chip-active'
+              : 'warm-chip-inactive'
           }`}
         >
           {currentStatus}
@@ -212,31 +212,31 @@ function EntryCard({ entry }: { entry: HotelMessEntry }) {
       </div>
 
       <div className="flex flex-wrap gap-2 text-xs">
-        <span className="rounded-full bg-blue-50 text-blue-700 px-2.5 py-0.5 font-medium">
+        <span className="warm-chip warm-chip-neutral">
           {entry.meal_type}
         </span>
-        <span className="rounded-full bg-gray-100 text-gray-600 px-2.5 py-0.5 font-medium">
+        <span className="warm-chip warm-chip-neutral">
           {entry.mess_plan_type}
         </span>
-        <span className="rounded-full bg-gray-100 text-gray-600 px-2.5 py-0.5 font-medium">
+        <span className="warm-chip warm-chip-neutral">
           {entry.number_of_persons} person{entry.number_of_persons !== 1 ? 's' : ''}
         </span>
       </div>
 
-      <div className="flex items-center justify-between pt-1 border-t border-gray-100">
-        <p className="text-xs text-gray-400">
+      <div className="flex items-center justify-between pt-1 border-t border-[#ead9c4]">
+        <p className="text-xs text-[#8c7a6f]">
           {new Date(entry.created_at).toLocaleDateString()}
         </p>
         <div className="flex items-center gap-3">
           <Link
             href={`/entries/${entry.id}`}
-            className="text-xs font-medium text-blue-600"
+            className="text-xs font-medium warm-link"
           >
             View
           </Link>
           <Link
             href={`/entries/${entry.id}/edit`}
-            className="text-xs font-medium text-gray-500"
+            className="text-xs font-medium text-[#7f6f64]"
           >
             Edit
           </Link>
@@ -244,7 +244,7 @@ function EntryCard({ entry }: { entry: HotelMessEntry }) {
             onClick={handleToggle}
             disabled={isPending}
             className={`text-xs font-medium disabled:opacity-50 ${
-              currentStatus === 'Active' ? 'text-red-500' : 'text-green-600'
+              currentStatus === 'Active' ? 'text-[#af594b]' : 'text-[#4f7b58]'
             }`}
           >
             {currentStatus === 'Active' ? 'Deactivate' : 'Activate'}

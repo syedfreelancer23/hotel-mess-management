@@ -1,6 +1,8 @@
 import { withAuth } from 'next-auth/middleware'
 
-const authDebugEnabled = process.env.AUTH_DEBUG === 'true'
+// Debug logs intentionally disabled.
+// Set to true temporarily only when actively troubleshooting auth in deployment logs.
+const authDebugEnabled = false
 
 export default withAuth({
   pages: {

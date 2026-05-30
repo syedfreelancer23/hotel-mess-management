@@ -58,12 +58,12 @@ export default function SearchFilterBar({
   const hasFilters = defaultSearch || defaultMealType || defaultStatus
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4">
+    <div className="warm-surface p-4">
       <div className="flex flex-col sm:flex-row gap-3">
         {/* Search */}
         <div className="relative flex-1">
           <svg
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+            className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9c8d81] pointer-events-none"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -80,7 +80,7 @@ export default function SearchFilterBar({
             defaultValue={defaultSearch}
             onChange={handleSearch}
             placeholder="Search by name or phone…"
-            className="w-full pl-9 pr-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-colors"
+            className="warm-control pl-9 pr-3.5"
           />
         </div>
 
@@ -88,7 +88,7 @@ export default function SearchFilterBar({
         <select
           defaultValue={defaultMealType ?? ''}
           onChange={handleMealType}
-          className="rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-colors bg-white"
+          className="warm-control text-[#5b4d43]"
         >
           <option value="">All Meal Types</option>
           <option value="Breakfast">Breakfast</option>
@@ -101,7 +101,7 @@ export default function SearchFilterBar({
         <select
           defaultValue={defaultStatus ?? ''}
           onChange={handleStatus}
-          className="rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-colors bg-white"
+          className="warm-control text-[#5b4d43]"
         >
           <option value="">All Statuses</option>
           <option value="Active">Active</option>
@@ -112,7 +112,7 @@ export default function SearchFilterBar({
         {hasFilters && (
           <button
             onClick={handleClearAll}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-gray-200 px-3.5 py-2.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700 transition-colors"
+            className="warm-outline-btn"
           >
             <svg
               className="w-4 h-4"

@@ -8,12 +8,12 @@ export default async function NewEntryPage() {
   const canCreate = session?.user?.role === 2
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto warm-page-block">
       {/* Page Header */}
       <div className="flex items-center gap-3">
         <Link
           href="/entries"
-          className="inline-flex items-center justify-center w-9 h-9 rounded-xl border border-gray-200 bg-white text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition-colors"
+          className="warm-outline-btn !w-9 !h-9 !min-h-0 !p-0"
         >
           <svg
             className="w-4 h-4"
@@ -30,8 +30,8 @@ export default async function NewEntryPage() {
           </svg>
         </Link>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">New Guest Entry</h1>
-          <p className="text-gray-500 text-sm mt-0.5">
+          <h1 className="warm-page-title">New Guest Entry</h1>
+          <p className="warm-page-subtitle">
             Fill in the details to register a new guest mess entry.
           </p>
         </div>

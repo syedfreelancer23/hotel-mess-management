@@ -7,6 +7,10 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import type { ActionResult } from '@/types'
 
+function normalizeMessPlanType(value: FormDataEntryValue | null): string {
+  return value === 'Monthly' ? 'Monthly' : 'Monthly'
+}
+
 function mapDbError(message: string): string {
   if (message.includes('invalid input syntax for type uuid')) {
     return 'Database schema mismatch detected. hotel_mess_entries.created_by is still UUID in your live database, but the app now writes integer users.user_id values. Update that column to integer and point the foreign key to public.users(user_id), or rerun the corrected schema in supabase/schema.sql.'
@@ -43,7 +47,7 @@ export async function createEntry(formData: FormData): Promise<ActionResult> {
     landmark: formData.get('landmark'),
     gender: formData.get('gender'),
     meal_type: formData.get('meal_type'),
-    mess_plan_type: formData.get('mess_plan_type'),
+    mess_plan_type: normalizeMessPlanType(formData.get('mess_plan_type')),
     number_of_persons: formData.get('number_of_persons'),
     special_notes: formData.get('special_notes'),
     meal_starting_date: formData.get('meal_starting_date'),
@@ -112,7 +116,7 @@ export async function updateEntry(
     landmark: formData.get('landmark'),
     gender: formData.get('gender'),
     meal_type: formData.get('meal_type'),
-    mess_plan_type: formData.get('mess_plan_type'),
+    mess_plan_type: normalizeMessPlanType(formData.get('mess_plan_type')),
     number_of_persons: formData.get('number_of_persons'),
     special_notes: formData.get('special_notes'),
     meal_starting_date: formData.get('meal_starting_date'),
@@ -170,11 +174,17 @@ export async function toggleEntryStatus(
   }
   const supabase = await createClient()
 
-  const { error } = await supabase
+  let query = supabase
     .from('hotel_mess_entries')
     .update({ status: newStatus })
     .eq('id', id)
-    .eq('created_by', userId)
+
+  // Keep creator-level restriction for non-admin users.
+  if (session.user.role !== 1) {
+    query = query.eq('created_by', userId)
+  }
+
+  const { error } = await query
 
   if (error) {
     return { error: mapDbError(error.message) }

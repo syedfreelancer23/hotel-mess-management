@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import AppQrCode from '@/components/common/AppQrCode'
 
+const authDebugEnabled = process.env.NEXT_PUBLIC_AUTH_DEBUG === 'true'
+
 export default function LoginPage() {
-  const router = useRouter()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -22,15 +22,25 @@ export default function LoginPage() {
     const result = await signIn('credentials', {
       username: username.trim(),
       password,
+      callbackUrl: '/dashboard',
       redirect: false,
     })
 
-    if (result?.error) {
+    if (authDebugEnabled) {
+      console.log('[auth-debug] Client signIn result', {
+        ok: result?.ok ?? false,
+        status: result?.status ?? null,
+        hasError: Boolean(result?.error),
+        hasUrl: Boolean(result?.url),
+      })
+    }
+
+    if (result?.error || !result?.ok) {
       setError('Invalid username or password. Please try again.')
       setLoading(false)
     } else {
-      router.push('/dashboard')
-      router.refresh()
+      // Use full-page navigation to avoid middleware/cookie timing issues on deployment.
+      window.location.href = result.url ?? '/dashboard'
     }
   }
 

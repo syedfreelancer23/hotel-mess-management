@@ -530,7 +530,6 @@ export default function EntryForm({
                   : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20'
               }`}
             >
-              <option value="Daily">Daily</option>
               <option value="Weekly">Weekly</option>
               <option value="Monthly">Monthly</option>
             </select>

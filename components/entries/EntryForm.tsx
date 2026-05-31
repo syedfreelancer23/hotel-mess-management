@@ -364,6 +364,22 @@ export default function EntryForm({
           />
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              Gender
+            </label>
+            <select
+              name="gender"
+              value={formValues.gender ?? ''}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors"
+            >
+              <option value="">Select gender (optional)</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">
               Phone Number <span className="text-red-500">*</span>
             </label>
             <input
@@ -472,23 +488,6 @@ export default function EntryForm({
             error={fieldErrors.landmark}
             placeholder="Optional"
           />
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Gender
-            </label>
-            <select
-              name="gender"
-              value={formValues.gender ?? ''}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 text-sm text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors"
-            >
-              <option value="">Select gender (optional)</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
         </div>
       </div>
 

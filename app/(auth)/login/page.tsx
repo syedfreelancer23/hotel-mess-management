@@ -56,14 +56,44 @@ export default function LoginPage() {
             <svg
               className="w-8 h-8"
               fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              viewBox="0 0 64 64"
+              aria-hidden="true"
             >
               <path
+                d="M16 24c-5 0-9-4-9-9s4-9 9-9c2 0 4 1 5 2 2-3 6-5 11-5s9 2 11 5c1-1 3-2 5-2 5 0 9 4 9 9s-4 9-9 9H16z"
+                fill="#fff8ef"
+              />
+              <path
+                d="M32 59c-9 0-16-7-16-16V31h32v12c0 9-7 16-16 16z"
+                fill="#ffe3be"
+              />
+              <path d="M22 31h20v7H22z" fill="#f6f0ea" />
+              <path
+                d="M18 24h28"
+                stroke="#f2cfa8"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M20 31h24"
+                stroke="#e9b381"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <path
+                d="M22 53c3 3 7 4 10 4s7-1 10-4"
+                stroke="#bc6d42"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+              />
+              <circle cx="26" cy="42" r="2" fill="#8f5b3a" />
+              <circle cx="38" cy="42" r="2" fill="#8f5b3a" />
+              <path
+                d="M16 24c-5 0-9-4-9-9s4-9 9-9c2 0 4 1 5 2 2-3 6-5 11-5s9 2 11 5c1-1 3-2 5-2 5 0 9 4 9 9s-4 9-9 9"
+                stroke="#f6dfc5"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
               />
             </svg>
           </div>
@@ -218,10 +248,9 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="warm-note">
+          {/* <p className="warm-note">
             Only authorized staff members can access this system.
-          </p>
-
+          </p> */}
           <div className="warm-qr">
             <AppQrCode className="max-w-[240px]" />
           </div>

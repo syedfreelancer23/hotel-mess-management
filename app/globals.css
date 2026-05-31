@@ -99,6 +99,7 @@
     line-height: 1.5;
   }
 
+
   .warm-card {
     background: linear-gradient(180deg, var(--warm-surface) 0%, var(--warm-surface-soft) 100%);
     border: 1px solid var(--warm-border);
